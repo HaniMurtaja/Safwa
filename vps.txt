@@ -1,0 +1,24 @@
+|   Domain : safwagroups.com
+|   IP: 142.93.116.140
+
+|   plesk
+|   https://exciting-antonelli.142-93-116-140.plesk.page:8443
+|   username : admin
+|   password : twUydogsIpsU171@
+|   ----------------------
+
+|   Console
+|   username : root
+|   password : safwA@2021Taxi
+
+|   Ftp
+|   username : safwa
+|   password : safwA@2021taxi
+
+
+| DB Connection:
+DB: db_safwa
+User: safwa_usr
+Password: 4v94Ur&b
+
+sudo ufw allow from any to any port 2775 proto tcp
