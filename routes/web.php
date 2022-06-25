@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('lang/{locale}', 'HomeController@lang');
 
-// redirect main page
 Route::get('/', 'WebsiteController@index')->name('web.home');
-// Route::get('/', function () {
-//     return redirect()->route('home');
-// });
 
 Auth::routes();
 
@@ -27,16 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::get('/real-time-messaging/{token}', 'Api\AuthController@msgForm');
 
-//Route::get('/email', 'EmailsController@index')->name('email');
-/*
-Route::get('send-mail', function () {
 
-    $email = ['message' => 'This is a test!'];
-    \Mail::to('anishkmathew@gmail.com')->send(new \App\Mail\TestEmail($email));
-
-    dd("Email is Sent.");
-}); */
-//Route::get("send-email", 'EmailController@sendEmail')->name('first.email');
 Route::group([
     'middleware' => ['permission:view users'],
     'prefix' => 'users',
@@ -131,24 +118,8 @@ Route::group([
     Route::delete('/coupon/{coupon}', 'CouponsController@destroy')
         ->name('coupon.destroy')->middleware('can:delete promo_codes');
 });
-/* Route::group([
-    'prefix' => 'categories',
-], function () {
-    Route::get('/', 'CategoriesController@index')
-        ->name('categories.categories.index');
-    Route::get('/create', 'CategoriesController@create')
-        ->name('categories.categories.create');
-    Route::get('/show/{categories}', 'CategoriesController@show')
-        ->name('categories.categories.show')->where('id', '[0-9]+');
-    Route::get('/{categories}/edit', 'CategoriesController@edit')
-        ->name('categories.categories.edit')->where('id', '[0-9]+');
-    Route::post('/', 'CategoriesController@store')
-        ->name('categories.categories.store');
-    Route::put('categories/{categories}', 'CategoriesController@update')
-        ->name('categories.categories.update')->where('id', '[0-9]+');
-    Route::delete('/categories/{categories}', 'CategoriesController@destroy')
-        ->name('categories.categories.destroy')->where('id', '[0-9]+');
-}); */
+
+
 Route::group([
     'prefix' => 'notification',
 ], function () {
@@ -755,16 +726,8 @@ Route::get('/gps','GuestController@gps');
 Route::get('/move/{token}/{trip_id}','GuestController@move');
 Route::get('/d','GuestController@d');
 Route::get('/d2','GuestController@d2');
-// Route::get('/users','TripsController@getCurrentTrips');
 Route::get('/preview/image', 'ChatController@preview_image')->name('preview.image');
 Route::post('/old/messages', 'ChatController@old_messages')->name('old.messages');
 
 
-// gps
-// Route::get('/gps',[GuestController::class,'gps']);
-// Route::get('/move',[GuestController::class,'move']);
-// // Route::get('/d',[GuestController::class,'d']);
-// // Route::get('/d2',[GuestController::class,'d2']);
-// // Route::get('/users',[ChatController::class,'getCurrentTrips']);
-// Route::get('/preview/image', [\App\Http\Controllers\Controller::class,'preview_image'])->name('preview.image');
-// Route::post('/old/messages', [\App\Http\Controllers\Controller::class,'old_messages'])->name('old.messages');
+

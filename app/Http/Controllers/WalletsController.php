@@ -79,8 +79,7 @@ class WalletsController extends Controller
      */
     public function create(Request $request)
     {
-       // $users = User::whereIn('user_type_id',array('3','4','5'))->pluck('name','id')->all();
-        //return view('wallet.create',compact('users'));
+      
     }
 
     /**
@@ -92,19 +91,7 @@ class WalletsController extends Controller
      */
     public function store(Request $request)
     {
-        /*try {
-
-            $data = $this->getData($request);
-
-            Wallet::create($data);
-
-            return redirect()->route('wallet.index')
-                ->with('success_message', trans('wallet.model_was_added'));
-        } catch (Exception $exception) {
-
-            return back()->withInput()
-                ->withErrors(['unexpected_error' => trans('wallet.unexpected_error')]);
-        }*/
+        
     }
 
     /**

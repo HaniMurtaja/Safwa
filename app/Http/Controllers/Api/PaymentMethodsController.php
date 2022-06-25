@@ -74,15 +74,7 @@ class PaymentMethodsController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        /* $city->update($request->all());
-
-        $updated_city   = new CitiesResource($city);
-        $data    = [
-            'city'=> $updated_city
-        ];
-        $message = 'Cities updated successfully';
-        $status_code    = 200; */
-
+        
         $data   = null;
         $message    =   'Unauthorized access!';
         $status_code   = 401;
@@ -98,10 +90,7 @@ class PaymentMethodsController extends Controller
      */
     public function destroy(City $city)
     {
-        /* $city->delete();
-        $data    = null;
-        $message = 'Cities deleted successfully';
-        $status_code    = 200; */
+        
 
         $data   = null;
         $message    =   'Unauthorized access!';

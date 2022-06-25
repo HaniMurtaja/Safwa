@@ -30,9 +30,7 @@ class RatingsController extends Controller
      */
     public function index(Request $request)
     {
-        /**
-        * Ajax call by datatable for listing of the cities.
-        */
+        
         if ($request->ajax()) {
             $data = Rating::with('trip')->with('ratedBy')->with('ratedFor')->with('doneBy')->get();
             $datatable =  DataTables::of($data)
@@ -162,10 +160,7 @@ class RatingsController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-                //'trip_id' => 'numeric|required',
-                //'user_type' => 'numeric|min:0|max:50|nullable',
-                //'rated_by' => 'numeric|required',
-                //'rated_for' => 'numeric|required',
+               
                 'rating' => 'numeric|required',
                 'rating_comment' => 'string|min:1|max:300',
         ];

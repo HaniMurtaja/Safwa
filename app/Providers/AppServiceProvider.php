@@ -27,8 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // Laravel 8 uses Tailwind.css by default for pagination. Add this for keep on using bootstrap
         Paginator::useBootstrap();
-        // Blade::if ('can', function ($resource, ...$params) {
-        //     return app(\App\Components\Contracts\Gate::class)->check($resource, $params);
-        // });
+       
     }
 }

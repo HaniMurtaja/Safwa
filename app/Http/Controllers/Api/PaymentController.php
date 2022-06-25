@@ -33,10 +33,9 @@ class PaymentController extends CustomersTripsController
     #################### ------------
     public static function checkout(Request $request, $createRegistration = false)
     {
-        // $request = new Request($data_arr);
-        // $user = auth()->user();
+     
         $user = User::where('id', auth()->user()->id)->with('city')->get()->first();
-        // return $user;
+       
 
         $prevlink = env('SANDBOX_MODE') == true ? "test." : "";
         $url = "https://" . $prevlink . "oppwa.com/v1/checkouts";
@@ -201,48 +200,7 @@ class PaymentController extends CustomersTripsController
 
         $result = json_decode($responseData , true);
 
-        // return $result;
-        // Result Example
-        // {
-        //     "id": "8ac7a4a17b7d2020017b7dc658516014",
-        //     "paymentType": "DB",
-        //     "paymentBrand": "VISA",
-        //     "amount": "20.00",
-        //     "currency": "SAR",
-        //     "descriptor": "4955.7828.4856 Tahudat AL safwa",
-        //     "result": {
-        //         "code": "000.100.110",
-        //         "description": "Request successfully processed in 'Merchant in Integrator Test Mode'"
-        //     },
-        //     "resultDetails": {
-        //         "ConnectorTxID1": "8ac7a4a17b7d2020017b7dc658516014"
-        //     },
-        //     "card": {
-        //         "bin": "411111",
-        //         "binCountry": "US",
-        //         "last4Digits": "1111",
-        //         "holder": "Fgg H",
-        //         "expiryMonth": "08",
-        //         "expiryYear": "2022"
-        //     },
-        //     "customer": {
-        //         "ip": "51.252.100.89",
-        //         "ipCountry": "SA"
-        //     },
-        //     "customParameters": {
-        //         "SHOPPER_MSDKIntegrationType": "Checkout UI",
-        //         "SHOPPER_device": "iPhone8,2",
-        //         "CTPE_DESCRIPTOR_TEMPLATE": "",
-        //         "SHOPPER_OS": "iOS 14.7.1",
-        //         "SHOPPER_MSDKVersion": "2.58.0"
-        //     },
-        //     "risk": {
-        //         "score": "100"
-        //     },
-        //     "buildNumber": "271ba226dc1e1aa1c297778e594d94428a0b9227@2021-08-24 13:58:51 +0000",
-        //     "timestamp": "2021-08-25 14:46:00+0000",
-        //     "ndc": "ECDC3BDAE934429EF03762E8A7924196.uat01-vm-tx02"
-        // }
+        
 
         // return $result;
         $status_code = $result['result']['code'];
@@ -330,12 +288,7 @@ class PaymentController extends CustomersTripsController
                             $wal = Wallet::create($wallet_data);
                             // return $wal;
                         }
-                        // $data['amount'] = $amount_to_driver_wallet;
-                        // $data['done_by']  = auth()->user()->id;
-                        // $data['sender_id'] = 0;
-                        // $data['receiver_id'] = $trip->driver_id;
-                        // $data['trip_id'] = $trip->id;
-                        // $data['note'] = trans('api.driver.money_adjusted');
+                     
 
 
                         $transaction->status = "Completed";
@@ -411,10 +364,7 @@ class PaymentController extends CustomersTripsController
 
         if(isset($result['id'])) {
             $data['done_by'] = auth()->user()->id;
-            // $data['checkout_id'] = $result['id'];
-            // $data['status'] = 'pending';
-            // $data['data'] = $result['result'];
-            // Transaction::create($data);
+            
 
             $message = 'successfully created checkout for card registration';
             $status_code    = 200;
@@ -439,19 +389,7 @@ class PaymentController extends CustomersTripsController
             $id_no = $query->booking_no;
             $payment_method_id = $query->payment_method_id;
         }
-        // $request->id_no = $id_no;
-        // $request->payment_method_id = $payment_method_id;
-
-        // $mark = substr($request->cc_number, 0, 1);
-        // $Brand = $paymentType = "";
-        // if($mark == '4') {
-        //     $Brand = "VISA";
-        //     $paymentType = "DB";
-        // }
-        // else if ($mark == '5') {
-        //     $Brand = "MASTER";
-        //     $paymentType = "PA";
-        // }
+        
         $prevlink = env('SANDBOX_MODE') == true ? "test." : "";
         $url = "https://" . $prevlink . "oppwa.com/v1/registrations/". $request->card_token ."/payments";
 
@@ -463,12 +401,6 @@ class PaymentController extends CustomersTripsController
         $data .= "&amount=" . $request->amount .
                     "&currency=" . $request->currency .
                     "&paymentType=PA" .
-                    // "&paymentBrand=" . $Brand .
-                    // "&card.number=" . $request->cc_number .
-                    // "&card.holder=" . $request->cc_holder .
-                    // "&card.expiryMonth=" . $request->cc_expiryMonth .
-                    // "&card.expiryYear=" . $request->cc_expiryYear .
-                    // "&card.cvv=" . $request->cc_cvv .
                     "&standingInstruction.source=MIT" .
                     "&standingInstruction.mode=REPEATED" .
                     "&standingInstruction.type=UNSCHEDULED" .
@@ -611,28 +543,11 @@ class PaymentController extends CustomersTripsController
     #################### ------------
     public function initialPayment(Request $request)
     {
-        // $mark = substr($request->cc_number, 0, 1);
-        // $Brand = $paymentType = "";
-        // if($mark == '4') {
-        //     $Brand = "VISA";
-        //     $paymentType = "DB";
-        // }
-        // else if ($mark == '5') {
-        //     $Brand = "MASTER";
-        //     $paymentType = "PA";
-        // }
+       
         $prevlink = env('SANDBOX_MODE') == true ? "test." : "";
         $url = "https://" . $prevlink . "oppwa.com/v1/payments";
         $data = "entityId=". env('ENTITY_ID') .
                     "&amount=" . $request->amount .
-                    "&currency=" . env('CURRENCY') .
-                    // "&paymentBrand=" . $Brand .
-                    // "&paymentType=" . $paymentType .
-                    // "&card.number=" . $request->cc_number .
-                    // "&card.holder=" . $request->cc_holder .
-                    // "&card.expiryMonth=" . $request->cc_expiryMonth .
-                    // "&card.expiryYear=" . $request->cc_expiryYear .
-                    // "&card.cvv=" . $request->cc_cvv .
                     "&standingInstruction.source=CIT" .
                     "&standingInstruction.mode=INITIAL" .
                     "&standingInstruction.type=UNSCHEDULED" .
@@ -737,7 +652,6 @@ class PaymentController extends CustomersTripsController
         $data['user_id'] = $user_id;
         $data['registration_id'] =  $request->registration_token;
         $data['payment_method_id'] =  $request->payment_method_id;
-        //$data['registration_id'] = $request->registration_token;
         $PaymentOptions = UserPaymentOption::where($data)->first();
         if(empty($PaymentOptions)){
 

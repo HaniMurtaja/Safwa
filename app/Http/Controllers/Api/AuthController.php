@@ -24,11 +24,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Register new app user
-     *
-     * @return JSON
-     */
+   
     public function register(Request $request) {
         $user_type_id = 4; // Customer
         $validator = Validator::make($request->all(), [
@@ -97,20 +93,18 @@ class AuthController extends Controller
         $data['user_type_id'] = $user_type_id;
         Otps::create($data);
 
-        // SMS Gateway disabled
-        // $body = "Your OTP to verify mobile is " . $token;
-        // $response = $this->sms_otp($newCustomer['phone'], $body);
+     
 
 
         $accessToken = $user->createToken('LaravelAuthApp')->accessToken;
-        // $response = ['user'=>$user, 'access_token' => $accessToken ,'error'=>0 ];
+       
 
         $data   = [
-            //'user' => auth()->user(),
+            
             'user_details' => $this->formatCustomerLoginResponse(auth()->user()),
             'phone_code' => $request['phone_code'],
             'access_token' => $accessToken,
-            // 'verification' => $verification
+      
         ];
         $message    =   trans('api.auth.loged_in');
         $status_code   = 200;
@@ -118,112 +112,9 @@ class AuthController extends Controller
         return response(['data' => $data, 'verification' => false, 'message' => $message, 'status_code' => $status_code]);
 
 
-        // // $response = ['success' => true , 'status'=> 200 , 'error'=>0];
-        // return response($response, 200);
+      
     }
 
-
-    // public function register(Request $request)
-    // {
-
-    //     $user_type_id   =   4; //Customer
-    //     $rules = [
-    //         'name' => 'required|max:55',
-    //         'email' => [
-    //             'required',
-    //             Rule::unique('users')->where(function ($query) {
-    //                 $query->where('user_type_id', 4);
-    //             }),
-    //         ],
-    //         'country_id' => 'required',
-    //         'nationality_id' => 'required',
-    //         'phone' => [
-    //             'required',
-    //             Rule::unique('users')->where(function ($query) {
-    //                 $query->where('user_type_id', 4);
-    //             }),
-    //         ],
-    //         'password' => 'required'
-    //     ];
-
-    //     $errors =   [];
-    //     $validatedData = $request->all();
-
-    //     $validator = Validator::make($validatedData, $rules);
-    //     if ($validator->fails()) {
-    //         $errors = $validator->errors()->messages();
-    //         $data   = $validatedData;
-    //         $message    =   trans('api.auth.validation_error');
-    //         $status_code   = 422;
-    //         return response(['data' => $data, 'message' => $message, 'status_code' => $status_code, 'errors' => $errors]);
-    //     }
-
-    //     $validatedData['password'] = Hash::make($request->password);
-    //     $validatedData['socket_token'] = Str::random(50);
-    //     $validatedData['user_type_id'] = $user_type_id;
-    //     $customerData['nationality_id'] = $request->nationality_id;
-    //     unset($validatedData['nationality_id']);
-    //     $user = User::create($validatedData)->id;
-    //     $newCustomer = User::where('phone', $validatedData['phone'])->where('user_type_id', $user_type_id)->where('country_id', $validatedData['country_id'])->first()->toArray();
-
-    //     $customer['user_id'] = $newCustomer['id'];
-    //     $customer['nationality_id'] = $customerData['nationality_id'];
-    //     Customer::create($customer); //create customer
-    //     $wallet_data['user_id'] = $newCustomer['id'];
-    //     $wallet_data['amount'] = 0;
-    //     $wallet_data['user_type'] = $user_type_id;
-    //     $wallet_data['is_active'] = '1';
-    //     Wallet::create($wallet_data);
-    //     $firstpaymentOption_data['user_id'] = $newCustomer['id'];
-    //     $firstpaymentOption_data['payment_method_id'] = config('constants.Cash');
-    //     $firstpaymentOption_data['payment_title'] = 'Cash';
-    //     $firstpaymentOption_data['is_default'] = '1';
-    //     UserPaymentOptions::create($firstpaymentOption_data);
-    //     $secondpaymentOption_data['user_id'] = $newCustomer['id'];
-    //     $secondpaymentOption_data['payment_method_id'] = config('constants.Wallet');
-    //     $secondpaymentOption_data['payment_title'] = 'Wallet';
-    //     $secondpaymentOption_data['is_default'] = '0';
-    //     UserPaymentOptions::create($secondpaymentOption_data);
-    //     $token = $this->generateNumericOTP(4);
-    //     $newDateTime  = Carbon::now()->addMinutes(5)->toDateTimeString();
-    //     //dd($validatedData);
-    //     $data['country_id'] = $validatedData['country_id'];
-    //     $data['phone'] = $newCustomer['phone'];
-    //     $data['otp'] = $token;
-    //     $data['otp_expire_on']  = $newDateTime;
-    //     $data['user_id'] = $newCustomer['id'];
-    //     $data['user_type_id'] = $user_type_id;
-    //     Otps::create($data);
-    //     $tophone = $newCustomer['phone'];
-    //     $body = "Your OTP to verify mobile is " . $token;
-    //     $response = $this->sms_otp($tophone, $body);
-
-    //     Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']]);
-    //     $loggedUser = Auth::user();
-
-    //     $accessToken = $loggedUser->createToken('authToken')->accessToken;
-
-    //     // Auth::attempt(['email' => $request['email'], 'password' => $pass]);
-    //     // $user = Auth::user();
-    //     // $accessToken = $user->createToken('LaravelAuthApp')->accessToken;
-
-    //     if ($response === false) {
-    //         $data   = $newCustomer;
-    //         $message    =   trans('api.auth.register_not_successful');
-    //         $status_code   = 500;
-    //     } else {
-    //         $data   = $newCustomer;
-    //         $message    =  trans('api.auth.register_successful');
-    //         $status_code   = 200;
-
-    //         // $response = ['token' => $token,'user'=>$user,'error'=>0 ];
-
-    //     }
-    //     return response([
-    //         'data' => $data, 'message' => $message,
-    //         'access_token' => $accessToken,
-    //         'status_code' => $status_code, 'token' => $accessToken, 'errors' => $errors]);
-    // }
 
     public function formatCustomerLoginResponse($row)
     {
@@ -740,17 +631,9 @@ class AuthController extends Controller
     function generateNumericOTP($n)
     {
 
-        // Take a generator string which consist of
-        // all numeric digits
         $generator = "1357902468";
 
-        // Iterate for n-times and pick a single character
-        // from generator and append it to $result
-
-        // Login for generating a random character from generator
-        //     ---generate a random number
-        //     ---take modulus of same with length of generator (say i)
-        //     ---append the character at place (i) from generator to result
+        
 
         $result = "";
 
@@ -772,7 +655,7 @@ class AuthController extends Controller
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
-        //$fields = json_encode(['userName' => 'Ghorm', 'numbers' => $tophone, 'userSender' => 'Darlana', 'apiKey' => '5b8c561edecb39e06ac46393164177ee', 'msg' => $body]);
+     
         $fields = json_encode(['userName' => 'SAFWA GROUP', 'numbers' => $tophone, 'userSender' => 'SAFWA', 'apiKey' => 'a3f01ee42eeaedb609a62fd3e509c9dc', 'msg' => $body]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
@@ -822,8 +705,7 @@ class AuthController extends Controller
     // For testing
     public function sendNotification(Request $request)
     {
-        // $result = NC::sendNotification($request);
-        // $user = Auth::user();
+       
         return $this->sendPushNotification([
             'title' => $request->title,
             'body' => $request->body,
@@ -837,8 +719,7 @@ class AuthController extends Controller
         $fcm_token = UserDevice::select('device_token')->where('user_id', $data['user_id'])->get()->first()->device_token;
 
         if( !empty($fcm_token) ) {
-            // echo($fcm_token);
-            // return "fcm_token = $fcm_token";
+         
             $adds = '';
             $payload = '{';
             if( !empty($object) ) {
@@ -887,29 +768,14 @@ class AuthController extends Controller
 
             $result = json_decode($response, true);
 
-            // echo($result);
-            // Result Example::
-            // {
-            //     "multicast_id": 3536260293962525005,
-            //     "success": 1,
-            //     "failure": 0,
-            //     "canonical_ids": 0,
-            //     "results": [
-            //         {
-            //             "message_id": "0:1622153169810847%388958c7388958c7"
-            //         }
-            //     ]
-            // }
-
             if(isset($result) && $result['success'] == '1') {
                 return true;
             } else {
-                // echo $response;
+             
                 return false;
             }
         } else return false;
 
-        // return $result;
     }
 
 }

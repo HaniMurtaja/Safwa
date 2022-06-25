@@ -14,28 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class FavoritePlacesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    /*  public function index()
-    {
-        $favorite_places   = FavoritePlace::all();
-        $data    = [
-            'favorite_places' => FavoritePlacesResource::collection($favorite_places)
-        ];
-        $message = 'Favorite Places retrieved successfully';
-        $status_code    = 200;
-        return response(['data' => $data, 'message' => $message, 'status_code' => $status_code]);
-    } */
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    //public function myFavoritePlaces()
+   
     public function index()
     {
 
@@ -49,12 +28,7 @@ class FavoritePlacesController extends Controller
         return response(['data' => $data, 'message' => $message, 'status_code' => $status_code]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+   
     public function store(Request $request)
     {
 
@@ -191,15 +165,12 @@ class FavoritePlacesController extends Controller
             $message = 'Favorite Places deleted successfully';
             $status_code    = 200;
             return response(['data' => $data, 'message' => $message, 'status_code' => $status_code]);
-            //return response(['message' => $message, 'status_code' => $status_code]);
-            /* } catch (\Exception $exception) {
-                return response()->json(['status_code' => 401, 'error' => $exception->getMessage()]);
-            }*/
+          
         } else {
             $status_code = 401;
             $message = 'Data Not Found';
             return response(['data' => $data, 'message' => $message, 'status_code' => $status_code]);
-            //return response()->json(['status_code' => $status_code, 'error' => $error]);
+            
         }
     }
 

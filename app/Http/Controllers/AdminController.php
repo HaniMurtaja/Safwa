@@ -100,11 +100,6 @@ class AdminController extends Controller
             $data['country_id'] = $data['country']; //driver user type
             $data['city_id'] =  $data['city']; //driver user type
 			$data['user_type_id'] = 2;
-           /* if($request->hasFile('profile_image')) {
-
-                $profile_image_path = $request->file('profile_image')->store('customers/profile');
-                $data['profile_image'] =  $profile_image_path;
-            }*/
             unset($data['country']);
             unset($data['city']);
 			$user_id = User::insertGetId($data);

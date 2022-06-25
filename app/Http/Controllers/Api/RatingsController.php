@@ -62,12 +62,8 @@ class RatingsController extends Controller
      */
     public function show(Rating $rating)
     {
-        /* $show_city   = new CitiesResource($city);
-        $data    = [
-            'city'=> $show_city
-        ];
-        $message = 'Cities details retrieved successfully';
-        $status_code    = 200; */
+     
+    
 
         $data   = null;
         $message    =   'Unauthorized access!';
@@ -85,14 +81,7 @@ class RatingsController extends Controller
      */
     public function update(Request $request, Rating $rating)
     {
-        /* $city->update($request->all());
-
-        $updated_city   = new CitiesResource($city);
-        $data    = [
-            'city'=> $updated_city
-        ];
-        $message = 'Cities updated successfully';
-        $status_code    = 200; */
+        
 
         $data   = null;
         $message    =   'Unauthorized access!';
@@ -110,10 +99,7 @@ class RatingsController extends Controller
      */
     public function destroy(Rating $rating)
     {
-        /* $city->delete();
-        $data    = null;
-        $message = 'Cities deleted successfully';
-        $status_code    = 200; */
+       
 
         $data   = null;
         $message    =   'Unauthorized access!';

@@ -194,7 +194,6 @@ class TripsController extends Controller
     public function pdfInvoice($id)
     {
         $data['trip'] =  Trip::with('customer', 'driver', 'car')->findOrFail($id);;
-        //return Excel::download(new InvoicesExport($booking), 'invoice'.time().'.pdf');
         $pdf = PDF::loadView('trip.invoice_pdf', $data);
         return $pdf->download('invoice' . time() . '.pdf');
     }
@@ -217,12 +216,8 @@ class TripsController extends Controller
             $categories = Category::where('service_id', $trip->service_id)->pluck('category', 'id')->all();
         }
         $payment_method = PaymentMethod::pluck('name', 'id')->all();
-        /* $from_lat = optional($trip->from_location)->getLat();
-        $from_lng = optional($trip->from_location)->getLng(); */
         $trip['trip_pickup_latitude']  =  $trip->from_location_lat;
         $trip['trip_pickup_longitude']  =  $trip->from_location_lng;
-        /* $to_lat = optional($trip->to_location)->getLat();
-        $to_lng = optional($trip->to_location)->getLng(); */
         $trip['trip_drop_latitude']  =  $trip->to_location_lat;;
         $trip['trip_drop_longitude']  =  $trip->to_location_lng;;
         return view('trip.edit', compact('trip', 'driver', 'customer', 'car', 'services', 'payment_method', 'categories'));
@@ -241,18 +236,6 @@ class TripsController extends Controller
 
         $data = $this->getData($request);
         $trip = Trip::findOrFail($id);
-        // $data['pickup_on'] =  date('Y-m-d H:i:s', strtotime($request->pickup_on));
-        // $data['dropoff_on'] =  date('Y-m-d H:i:s', strtotime($request->dropoff_on));
-        // $data['from_location'] = new Point($data['trip_pickup_latitude'], $data['trip_pickup_longitude']);
-        // $data['from_location_lat'] = $data['trip_pickup_latitude'];
-        // $data['from_location_lng'] = $data['trip_pickup_longitude'];
-        // $data['to_location'] = new Point($data['trip_drop_latitude'], $data['trip_drop_longitude']);
-        // $data['to_location_lat'] = $data['trip_drop_latitude'];
-        // $data['to_location_lng'] = $data['trip_drop_longitude'];
-        // if($data['payment_status'] == 1){
-        //     $data['status'] = 9;
-        // }
-
         $trip->update($data);
 
         return redirect()->route('trip.index')
@@ -291,31 +274,7 @@ class TripsController extends Controller
     protected function getData(Request $request)
     {
         $rules = [
-            // 'pickup_on' => 'required',
-            // 'dropoff_on' =>  'required',
-            // 'from_address' => 'required',
-            // //'from_location'=> 'required',
-            // 'trip_pickup_latitude' => 'required',
-            // 'trip_pickup_longitude' => 'required',
-            // 'to_address' => 'required',
-            // //'to_location' => 'required',
-            // 'trip_drop_latitude' => 'required',
-            // 'trip_drop_longitude' => 'required',
-            // 'distance' => 'required',
-            // 'km_charge' => 'required',
-            // 'cancellation_charge' => 'required',
-            // 'minimum_charge'    => 'required',
-            // 'amount' => 'required',
-            // 'discount' => 'required',
-            // 'tax' => 'required',
-            // 'final_amount' => 'required',
-            // 'customer_id' => 'required',
-            // 'driver_id' => 'required',
-            // 'car_id' => 'required',
             'status' => 'nullable'
-            // 'service_id' => 'nullable',
-            // 'category_id' => 'nullable',
-            // 'payment_method' => 'nullable',
         ];
 
         $data = $request->validate($rules);
@@ -371,26 +330,7 @@ class TripsController extends Controller
     /// ========== New for real-time tracking
     public function getCurrentTrips()
     {
-        /*
-                $x=Trips::select('users.id as user_id','trips.id','trips.trip_no','users.name','users.email','users.phone','users.profile_image','cars.color','cars.car_name','trips.from_location_lat','trips.from_location_lng')
-                    //->join('drivers','drivers.id','=','trips.driver_id')
-                    ->join('users','users.id','=','trips.driver_id')
-                    ->join('cars','trips.car_id','=','cars.id')
-                    ->whereIn('trips.status', array(4,5,6,7,8,9))
-                    ->get();
-        */
-        // $x = DB::table('trips')
-        //     ->select('users.phone', 'users.email', 'trips.status', 'users.id as user_id', 'trips.id', 'trips.trip_no', 'users.name', 'users.email', 'users.phone', 'users.profile_image', 'cars.color', 'cars.car_name', 'trips.from_location_lat', 'trips.from_location_lng')
-        //     ->join('users', 'users.id', '=', 'trips.driver_id')
-        //     ->join('cars', 'trips.car_id', '=', 'cars.id')
-        //     ->whereIn('trips.status', array(4, 5, 6, 7, 8, 9))
-        //     ->get();
-        // $x = DB::table('trips')
-        //     ->select('users.phone', 'users.email', 'trips.status', 'users.id as user_id', 'trips.id', 'trips.trip_no', 'users.name', 'users.email', 'users.phone', 'users.profile_image', 'cars.color', 'cars.car_name', 'trips.from_location_lat as lat', 'trips.from_location_lng as lng')
-        //     ->join('users', 'users.id', '=', 'trips.driver_id')
-        //     ->join('cars', 'trips.car_id', '=', 'cars.id')
-        //     ->whereIn('trips.status', array(4, 5, 6, 7, 8, 9))
-        //     ->get();
+        
 
 
         $x = DB::table('trips')
@@ -398,18 +338,10 @@ class TripsController extends Controller
             ->join('users','users.id','=','trips.driver_id')
             ->join('cars','trips.car_id','=','cars.id')
             ->join('trip_trackings','trip_trackings.trip_id','=','trips.id')
-            // ->whereIn('trips.status', array(4,5,6,7,8,9))
             ->get();
 
 
-        // dd($x);
-        /*
-
-                foreach ($x as $user) {
-                    echo $user->name."<br>";
-                }
-        dd();
-        */
+       
         return $x;
     }
 

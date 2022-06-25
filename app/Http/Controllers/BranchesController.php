@@ -194,13 +194,6 @@ class BranchesController extends Controller
         // print_r($data); exit;
         $branch->update($data);
 
-        //$data['service_id'] = 3; //Braches for rent cars
-        //Add Branch
-        //$branch_id = DB::table('branches')->insertGetId($data);
-
-        //Update the point location
-        //$branch = Branch::find($branch_id);
-        //location as Point
         if (isset($location_latitude) && isset($location_longitude)) {
             $branch->location = new Point($location_latitude, $location_longitude);    // (lat, lng)
         }

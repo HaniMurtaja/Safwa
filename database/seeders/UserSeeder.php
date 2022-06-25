@@ -13,8 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        //Seeding the Userfactory
-        // create 10 users with just one line
-        //factory(User::class, 10)->create();
+        
     }
 }

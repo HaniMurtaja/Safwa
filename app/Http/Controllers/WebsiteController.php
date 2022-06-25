@@ -16,20 +16,7 @@ use Illuminate\Support\Facades\App;
 
 class WebsiteController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-
-    /**
-     * Sets the language.
-     *
-    */
+   
     public function lang($locale)
     {
         App::setLocale($locale);
@@ -37,11 +24,7 @@ class WebsiteController extends Controller
         return redirect()->back();
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+  
     public function index()
     {
         $roles = auth()->user()->getRoleNames();

@@ -11,15 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /**
-     * Get a success response
-     *
-     * @param mix $message
-     * @param mix $data
-     * @param array $meta
-     *
-     * @return Illuminate\Http\Response
-     */
+    
     protected function successResponse($message, $data, array $meta = [])
     {
         return response()->json(
@@ -28,13 +20,7 @@ class Controller extends BaseController
             ], $meta), 200);
     }
 
-    /**
-     * Get an error response
-     *
-     * @param mix $message
-     *
-     * @return Illuminate\Http\Response
-     */
+
     protected function errorResponse($message)
     {
         return response()->json([

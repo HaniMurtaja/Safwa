@@ -102,12 +102,7 @@ class UsersController extends Controller
         $data['city_id'] =  $data['city'];
         $data['password'] = Hash::make($data['password']); //Encrypting password
         User::create($data);
-/*
-        $email = ['message' => 'This is a test!'];
-        \Mail::to('anishkmathew@gmail.com')->send(new \App\Mail\TestEmail($email));
 
-        dd("Email is Sent.");
-*/
         return redirect()->route('users.user.index')
             ->with('success_message', trans('users.model_was_added'));
     }

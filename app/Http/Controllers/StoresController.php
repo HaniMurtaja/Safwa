@@ -28,13 +28,10 @@ class StoresController extends Controller
 
             $datatable =  DataTables::of($data)
                     ->addIndexColumn()
-                    /*->addColumn('status', function($store){
-                        return view('stores.status', compact('store'));
-                    })*/
                     ->addColumn('action', function($store){
                         return view('stores.datatable', compact('store'));
                     })
-                    //->rawColumns(['status','action'])
+              
                     ->rawColumns(['action'])
                     ->make(true);
             return $datatable;

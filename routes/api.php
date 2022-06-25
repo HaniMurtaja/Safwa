@@ -14,24 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/* Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
-Route::group([
-    'prefix' => 'users',
-], function () {
-    Route::get('/', 'Api\UsersController@index')
-         ->name('api.users.user.index');
-    Route::get('/show/{user}','Api\UsersController@show')
-         ->name('api.users.user.show');
-    Route::post('/', 'Api\UsersController@store')
-         ->name('api.users.user.store');
-    Route::put('user/{user}', 'Api\UsersController@update')
-         ->name('api.users.user.update');
-    Route::delete('/user/{user}','Api\UsersController@destroy')
-         ->name('api.users.user.destroy');
-}); */
 
 Route::post('/register', 'Api\AuthController@register')->name('register.api');
 Route::post('/login', 'Api\AuthController@login')->name('login.api');
@@ -65,12 +48,7 @@ Route::get('/rental_car_categories', 'Api\CarsController@rentalCarCategories');
 Route::post('/rental_cars_by_nearest', 'Api\CarsController@rentalCarsByNearestBranch');
 
 
-/*
-Route::middleware(['app_type'])->prefix('driver')->group(function (){
-    Route::get('test', function () {
-        dd($request->all());
-    });
-}); */
+
 Route::middleware(['auth:api'])->group(function () {
     Route::get('/logout', 'Api\AuthController@logout');
     Route::get('/list_online_users', 'Api\AuthController@listOnlineUsers');
@@ -78,7 +56,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::post('/sendNotification', 'Api\AuthController@sendNotification');
 
 
-    //Route::post('/car_rentals', 'Api\CarRentalsController@');
+
     Route::apiResource('/customers', 'Api\CustomersController');
     Route::apiResource('/payment_method', 'Api\PaymentMethodsController');
     Route::apiResource('/favorite_places', 'Api\FavoritePlacesController');
@@ -92,16 +70,14 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/customer_details', 'Api\CustomersController@customer_details');
     Route::post('/update_customer_details', 'Api\CustomersController@update_customer_details');
 
-    //Live driver location update using event broadcasting with webscoket
+    
     Route::post('/update_driver_location', 'Api\DriversController@update_location');
 
     Route::post('/cancelled_job', 'Api\DriversController@cancelled_job');
     Route::post('/accept_job', 'Api\DriversController@accept_job');
-    //Route::post('/update_trip_status', 'Api\DriversController@update_trip_status');
     Route::post('/collect_money', 'Api\DriversController@collect_money');
     Route::post('/driver_ratings', 'Api\DriversController@driver_ratings');
     Route::post('/customer_ratings', 'Api\DriversController@customer_ratings');
-    //Route::post('/current_job', 'Api\DriversController@getCurrentJob');
     Route::post('/apply_coupon', 'Api\CouponsController@apply_coupon');
     Route::post('/update_profile_image', 'Api\CustomersController@update_profile_image');
     Route::post('/update_email', 'Api\AuthController@update_email');
@@ -117,9 +93,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/get_services', 'Api\CustomersTripsController@getServices');
 
     Route::post('/create_trip', 'Api\CustomersTripsController@addTripDetails');
-    //Route::post('/update_customer_trip_status', 'Api\CustomersTripsController@UpdateTripStatus');
     Route::post('/update_trip_status', 'Api\CustomersTripsController@UpdateTripStatus');
-    //Route::post('/update_driver_trip_status', 'Api\DriverTripsController@UpdateTripStatus');
     Route::get('/user_payment_options', 'Api\PaymentMethodsController@user_payment_options');
     Route::post('/add_payment_options', 'Api\PaymentMethodsController@add_payment_options');
     Route::post('/update_payment_default_options', 'Api\PaymentMethodsController@update_payment_default_options');
@@ -139,22 +113,13 @@ Route::middleware(['auth:api'])->group(function () {
     Route::apiResource('/reporting', 'Api\ComplaintsController');
     Route::post('/online_hours', 'Api\DriversController@onlineHours');
 
-    //Route::post('/users/language', 'Api\UsersController@language')->name('users.language');
 
     Route::post('/customer_nearest_drivers', 'Api\CustomersTripsController@customer_nearest_drivers');
-    // Route::post('/push_nearest_drivers', 'Api\CustomersTripsController@push_nearest_drivers');
-
+  
     Route::post('/get_chat_by_trip', 'Api\CustomersTripsController@get_chat_by_trip');
 
 
     Route::post('prepare_checkout', 'Api\PaymentController@prepareCheckout');
-
-    // Route::post('checkout', 'PaymentController@checkout')->name('checkout');
-    // Route::post('payment', 'HyperPayPaymentController@payment')->name('payment');
-    // Route::post('payment-status', 'HyperPayPaymentController@paymentStatus')->name('payment-status');
-    // Route::get('finalize', 'HyperPayPaymentController@finalize')->name('finalize');
-
-    // Route::get('payment/{id}', 'HyperPayPaymentController@show')->name('payment');
 
 });
 
